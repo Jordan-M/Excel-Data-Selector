@@ -28,6 +28,7 @@ namespace DataExtractor
                 catch (InvalidOperationException ex)
                 {
                     MessageBox.Show(ex.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
             }
         }
