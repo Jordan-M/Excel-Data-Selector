@@ -41,9 +41,9 @@ namespace DataExtractor
             List<string> valueList = new List<string>();
             StringBuilder line = new StringBuilder();
 
-            for (int i = 1; i <= rows; i++)
+            for (int i = 1; i < rows; i++)
             {
-                for (int j = 1; j <= cols; j++)
+                for (int j = 1; j < cols; j++)
                 {
                     var cellObject = range.Cells[i, j];
                     var cellValue = range.Cells[i, j].Value2;
@@ -54,12 +54,11 @@ namespace DataExtractor
                         string content;
                         if (cellValue == null)
                         {
-                            content = "";
+                            content = CleanString("");
                         }
                         else if (DateTime.TryParse(cellObject.Value.ToString(), out time))
                         {
-                            Console.WriteLine(line.ToString());
-                            content = cellObject.Value.ToShortDateString();
+                            content = CleanString(cellObject.Value.ToShortDateString());
                         }
                         else
                         {

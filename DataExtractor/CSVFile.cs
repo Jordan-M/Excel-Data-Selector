@@ -46,7 +46,7 @@ namespace DataExtractor
             if (file == null)
                 return;
 
-            Rows = file.Count;
+            Rows = file.Count - 1;
             Cols = GetRowAsArray(0).Length;
         }
 
