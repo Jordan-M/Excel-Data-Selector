@@ -34,7 +34,19 @@ namespace DataExtractor
 
                 DatabaseHandler database = new DatabaseHandler(uxOpenFile.FileName);
                 database.CsvToSql(csv);
+                UpdateHeaderComboBox(database);
             }
+        }
+
+        private void UpdateHeaderComboBox(DatabaseHandler database)
+        {
+            string[] headers = database.RetrieveHeaders();
+            foreach (string header in headers)
+            {
+                uxHeaderSelect.Items.Add(header);
+            }
+
+            uxHeaderSelect.SelectedIndex = 0;
         }
 
         private void UserInterface_Load(object sender, EventArgs e)

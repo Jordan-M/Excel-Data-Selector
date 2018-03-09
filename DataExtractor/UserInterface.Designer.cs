@@ -81,6 +81,7 @@
             // 
             // uxHeaderSelect
             // 
+            this.uxHeaderSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.uxHeaderSelect.FormattingEnabled = true;
             this.uxHeaderSelect.Location = new System.Drawing.Point(86, 37);
             this.uxHeaderSelect.Name = "uxHeaderSelect";
@@ -98,6 +99,7 @@
             // 
             // uxDataSelect
             // 
+            this.uxDataSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.uxDataSelect.FormattingEnabled = true;
             this.uxDataSelect.Location = new System.Drawing.Point(86, 64);
             this.uxDataSelect.Name = "uxDataSelect";

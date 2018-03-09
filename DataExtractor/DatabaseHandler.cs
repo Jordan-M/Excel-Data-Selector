@@ -67,5 +67,20 @@ namespace DataExtractor
             sqlCommand = new SQLiteCommand("end", dbConnection);
             sqlCommand.ExecuteNonQuery();
         }
+
+        public string[] RetrieveHeaders()
+        {
+            SQLiteCommand sqlCommand = new SQLiteCommand("select * from cache", dbConnection);
+            SQLiteDataReader reader = sqlCommand.ExecuteReader();
+
+            string[] headers = new string[reader.FieldCount];
+
+            for (var i = 0; i < reader.FieldCount; i++)
+            {
+                headers[i] = reader.GetName(i);
+            }
+
+            return headers;
+        }
     }
 }
