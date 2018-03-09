@@ -21,15 +21,19 @@ namespace DataExtractor
         {
             if (uxOpenFile.ShowDialog() == DialogResult.OK)
             {
+                List<string> csv;
                 try
                 {
-                    ExcelReader.Read(uxOpenFile.FileName);
+                    csv = ExcelReader.Read(uxOpenFile.FileName);
                 }
                 catch (InvalidOperationException ex)
                 {
                     MessageBox.Show(ex.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+
+                DatabaseHandler database = new DatabaseHandler(uxOpenFile.FileName);
+                database.CsvToSql(csv);
             }
         }
 
