@@ -33,7 +33,12 @@ namespace DataExtractor
 
         public string[] GetRowAsArray(int row)
         {
-            return file[0].Split(',');
+            return file[row].Split(',');
+        }
+
+        public string GetRow(int row)
+        {
+            return file[row];
         }
 
         private void SetRowsAndCols()

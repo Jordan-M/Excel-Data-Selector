@@ -54,12 +54,14 @@ namespace DataExtractor
             sqlCommand = new SQLiteCommand("begin", dbConnection);
             sqlCommand.ExecuteNonQuery();
 
-            StringBuilder queryFormat = new StringBuilder();
+            string queryFormat = "INSERT INTO cache ({0}) VALUES ({1});";
 
-            for (int i = 1; i < csv.Rows; i++)
+            for (int i = 1; i <= csv.Rows; i++)
             {
-                string[] content = csv.GetRowAsArray(i);
-                sqlCommand.CommandText = "";
+                string rowContent = csv.GetRow(i);
+                Console.WriteLine(rowContent);
+                sqlCommand.CommandText = String.Format(queryFormat, csv.GetRow(0), csv.GetRow(i));
+                sqlCommand.ExecuteNonQuery();
             }
 
             sqlCommand = new SQLiteCommand("end", dbConnection);

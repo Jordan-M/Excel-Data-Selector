@@ -50,14 +50,27 @@ namespace DataExtractor
 
                     if (cellObject != null)
                     {
-                        string content = (cellValue == null) ? "" : cellValue.ToString();
-                        line.Append(CleanString(content));
+                        DateTime time;
+                        string content;
+                        if (cellValue == null)
+                        {
+                            content = "";
+                        }
+                        else if (DateTime.TryParse(cellObject.Value.ToString(), out time))
+                        {
+                            Console.WriteLine(line.ToString());
+                            content = cellObject.Value.ToShortDateString();
+                        }
+                        else
+                        {
+                            content = CleanString(cellValue.ToString());
+                        }
+                        line.Append(content);
                         line.Append(',');
                     }
                 }
                 line.Length--; // Remove the last comma
                 valueList.Add(line.ToString());
-                Console.WriteLine(line.ToString());
                 line.Clear();
             }
 
@@ -102,6 +115,11 @@ namespace DataExtractor
         /// <returns>The clean string</returns>
         private static string CleanString(string dirtyString)
         {
+            //DEBUG
+            //double d = double.Parse(dirtyString);
+            //DateTime conv = DateTime.FromOADate(d);
+            //return conv.ToShortDateString();
+
             StringBuilder cleanString = new StringBuilder();
 
             cleanString.Append('"'); // All of our string should start with a "
@@ -113,6 +131,7 @@ namespace DataExtractor
                 {
                     cleanString.Append(c);
                 }
+
             }
 
             cleanString.Append('"'); // All of our string should end with a "
