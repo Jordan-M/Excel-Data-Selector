@@ -56,7 +56,7 @@ namespace DataExtractor
 
             string queryFormat = "INSERT INTO cache ({0}) VALUES ({1});";
 
-            for (int i = 1; i <= csv.Rows; i++)
+            for (int i = 1; i < csv.Rows; i++)
             {
                 string rowContent = csv.GetRow(i);
                 Console.WriteLine(rowContent);
