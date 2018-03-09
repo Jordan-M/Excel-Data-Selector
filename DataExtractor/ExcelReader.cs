@@ -13,10 +13,25 @@ namespace DataExtractor
 {
     static class ExcelReader
     {
-        public static List<String> Read(string filePath)
+        /// <summary>
+        /// Reads in an excel file and creates a List of strings in CSV format for each row
+        /// </summary>
+        /// <param name="filePath">Path to an excel file</param>
+        /// <returns>A list of csv style strings</returns>
+        public static List<String> Read(string filePath) 
         {
             Application excel = new Application();
-            Workbook workBook = excel.Workbooks.Open(filePath);
+            Workbook workBook;
+
+            try
+            {
+                workBook = excel.Workbooks.Open(filePath);
+            }
+            catch (COMException ex)
+            {
+                throw new InvalidOperationException(ex.Message);
+            }
+
             Worksheet sheet = workBook.Sheets[1];
             Range range = sheet.UsedRange;
 
@@ -51,6 +66,13 @@ namespace DataExtractor
             return valueList;
         }
 
+        /// <summary>
+        /// Cleans up the enviornment and frees all resources
+        /// </summary>
+        /// <param name="excel">Application to release</param>
+        /// <param name="workBook">Workbook to release</param>
+        /// <param name="sheet">Sheet to release</param>
+        /// <param name="range">Range to release</param>
         private static void CleanResources(Application excel, Workbook workBook, Worksheet sheet, Range range)
         {
             //cleanup
@@ -70,6 +92,14 @@ namespace DataExtractor
             Marshal.ReleaseComObject(excel);
         }
 
+        /// <summary>
+        /// Cleans a string to make it CSV friendly.
+        /// Things that make a string csv friendly are:
+        ///     1.) Surrounded by quotes. This forces all commas in the string to be escaped
+        ///     2.) Any quoutes inside the string should be followed by another quote to escape it
+        /// </summary>
+        /// <param name="dirtyString">A string to make csv friendly</param>
+        /// <returns>The clean string</returns>
         private static string CleanString(string dirtyString)
         {
             StringBuilder cleanString = new StringBuilder();

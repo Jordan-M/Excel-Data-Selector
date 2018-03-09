@@ -21,7 +21,14 @@ namespace DataExtractor
         {
             if (uxOpenFile.ShowDialog() == DialogResult.OK)
             {
-                ExcelReader.Read(uxOpenFile.FileName);
+                try
+                {
+                    ExcelReader.Read(uxOpenFile.FileName);
+                }
+                catch (InvalidOperationException ex)
+                {
+                    MessageBox.Show(ex.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
