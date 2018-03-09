@@ -114,11 +114,6 @@ namespace DataExtractor
         /// <returns>The clean string</returns>
         private static string CleanString(string dirtyString)
         {
-            //DEBUG
-            //double d = double.Parse(dirtyString);
-            //DateTime conv = DateTime.FromOADate(d);
-            //return conv.ToShortDateString();
-
             StringBuilder cleanString = new StringBuilder();
 
             cleanString.Append('"'); // All of our string should start with a "
