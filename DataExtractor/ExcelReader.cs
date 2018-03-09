@@ -7,6 +7,7 @@ using System.Data.OleDb;
 using System.Data;
 using Microsoft.Office.Interop.Excel;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace DataExtractor
 {
@@ -34,9 +35,8 @@ namespace DataExtractor
 
                     if (cellObject != null)
                     {
-                        string contentFormat = "\"{0}\"";
                         string content = (cellValue == null) ? "" : cellValue.ToString();
-                        line.Append(String.Format(contentFormat, content));
+                        line.Append(CleanString(content));
                         line.Append(',');
                     }
                 }
@@ -46,10 +46,48 @@ namespace DataExtractor
                 line.Clear();
             }
 
-            workBook.Close(true);
-            excel.Quit();
+            CleanResources(excel, workBook, sheet, range);
 
-           return valueList;
+            return valueList;
+        }
+
+        private static void CleanResources(Application excel, Workbook workBook, Worksheet sheet, Range range)
+        {
+            //cleanup
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+
+            //release com objects to fully kill excel process from running in the background
+            Marshal.ReleaseComObject(range);
+            Marshal.ReleaseComObject(sheet);
+
+            //close and release
+            workBook.Close();
+            Marshal.ReleaseComObject(workBook);
+
+            //quit and release
+            excel.Quit();
+            Marshal.ReleaseComObject(excel);
+        }
+
+        private static string CleanString(string dirtyString)
+        {
+            StringBuilder cleanString = new StringBuilder();
+
+            cleanString.Append('"'); // All of our string should start with a "
+
+            foreach (char c in dirtyString)
+            {
+                cleanString.Append(c);
+                if (c == '"')
+                {
+                    cleanString.Append(c);
+                }
+            }
+
+            cleanString.Append('"'); // All of our string should end with a "
+
+            return cleanString.ToString();
         }
     }
 }
