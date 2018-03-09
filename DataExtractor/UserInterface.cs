@@ -21,7 +21,7 @@ namespace DataExtractor
         {
             if (uxOpenFile.ShowDialog() == DialogResult.OK)
             {
-
+                ExcelReader.Read(uxOpenFile.FileName);
             }
         }
 

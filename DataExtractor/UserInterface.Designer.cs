@@ -36,17 +36,12 @@
             this.uxHeaderSelect = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.uxDataSelect = new System.Windows.Forms.ComboBox();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.uxMenuStrip = new System.Windows.Forms.MenuStrip();
-            this.uxMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // uxFileSelectLabel
             // 
             this.uxFileSelectLabel.AutoSize = true;
-            this.uxFileSelectLabel.Location = new System.Drawing.Point(20, 30);
+            this.uxFileSelectLabel.Location = new System.Drawing.Point(21, 9);
             this.uxFileSelectLabel.Name = "uxFileSelectLabel";
             this.uxFileSelectLabel.Size = new System.Drawing.Size(59, 13);
             this.uxFileSelectLabel.TabIndex = 0;
@@ -54,7 +49,7 @@
             // 
             // uxFileDisplay
             // 
-            this.uxFileDisplay.Location = new System.Drawing.Point(85, 27);
+            this.uxFileDisplay.Location = new System.Drawing.Point(86, 6);
             this.uxFileDisplay.Name = "uxFileDisplay";
             this.uxFileDisplay.ReadOnly = true;
             this.uxFileDisplay.Size = new System.Drawing.Size(246, 20);
@@ -62,7 +57,7 @@
             // 
             // uxFileSelectButton
             // 
-            this.uxFileSelectButton.Location = new System.Drawing.Point(337, 26);
+            this.uxFileSelectButton.Location = new System.Drawing.Point(338, 5);
             this.uxFileSelectButton.Name = "uxFileSelectButton";
             this.uxFileSelectButton.Size = new System.Drawing.Size(43, 23);
             this.uxFileSelectButton.TabIndex = 2;
@@ -78,7 +73,7 @@
             // uxHeaderSelectLabel
             // 
             this.uxHeaderSelectLabel.AutoSize = true;
-            this.uxHeaderSelectLabel.Location = new System.Drawing.Point(1, 61);
+            this.uxHeaderSelectLabel.Location = new System.Drawing.Point(2, 40);
             this.uxHeaderSelectLabel.Name = "uxHeaderSelectLabel";
             this.uxHeaderSelectLabel.Size = new System.Drawing.Size(78, 13);
             this.uxHeaderSelectLabel.TabIndex = 3;
@@ -87,7 +82,7 @@
             // uxHeaderSelect
             // 
             this.uxHeaderSelect.FormattingEnabled = true;
-            this.uxHeaderSelect.Location = new System.Drawing.Point(85, 58);
+            this.uxHeaderSelect.Location = new System.Drawing.Point(86, 37);
             this.uxHeaderSelect.Name = "uxHeaderSelect";
             this.uxHeaderSelect.Size = new System.Drawing.Size(295, 21);
             this.uxHeaderSelect.TabIndex = 4;
@@ -95,7 +90,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 88);
+            this.label1.Location = new System.Drawing.Point(14, 67);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(66, 13);
             this.label1.TabIndex = 5;
@@ -104,48 +99,16 @@
             // uxDataSelect
             // 
             this.uxDataSelect.FormattingEnabled = true;
-            this.uxDataSelect.Location = new System.Drawing.Point(85, 85);
+            this.uxDataSelect.Location = new System.Drawing.Point(86, 64);
             this.uxDataSelect.Name = "uxDataSelect";
             this.uxDataSelect.Size = new System.Drawing.Size(295, 21);
             this.uxDataSelect.TabIndex = 6;
-            // 
-            // fileToolStripMenuItem
-            // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openToolStripMenuItem,
-            this.exportToolStripMenuItem});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "File";
-            // 
-            // openToolStripMenuItem
-            // 
-            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
-            this.openToolStripMenuItem.Text = "Open";
-            // 
-            // exportToolStripMenuItem
-            // 
-            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
-            this.exportToolStripMenuItem.Text = "Export";
-            // 
-            // uxMenuStrip
-            // 
-            this.uxMenuStrip.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.uxMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
-            this.uxMenuStrip.Location = new System.Drawing.Point(0, 0);
-            this.uxMenuStrip.Name = "uxMenuStrip";
-            this.uxMenuStrip.Size = new System.Drawing.Size(389, 24);
-            this.uxMenuStrip.TabIndex = 7;
-            this.uxMenuStrip.Text = "menuStrip1";
             // 
             // UserInterface
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(389, 117);
+            this.ClientSize = new System.Drawing.Size(389, 91);
             this.Controls.Add(this.uxDataSelect);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.uxHeaderSelect);
@@ -153,13 +116,9 @@
             this.Controls.Add(this.uxFileSelectButton);
             this.Controls.Add(this.uxFileDisplay);
             this.Controls.Add(this.uxFileSelectLabel);
-            this.Controls.Add(this.uxMenuStrip);
-            this.MainMenuStrip = this.uxMenuStrip;
             this.Name = "UserInterface";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.UserInterface_Load);
-            this.uxMenuStrip.ResumeLayout(false);
-            this.uxMenuStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -175,10 +134,6 @@
         private System.Windows.Forms.ComboBox uxHeaderSelect;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox uxDataSelect;
-        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
-        private System.Windows.Forms.MenuStrip uxMenuStrip;
     }
 }
 
