@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -12,12 +13,13 @@ namespace DataExtractor
 {
     public partial class UserInterface : Form
     {
+        DatabaseHandler database = null;
         public UserInterface()
         {
             InitializeComponent();
         }
 
-        private void uxFileSelectButton_Click(object sender, EventArgs e)
+        private async void uxFileSelectButton_Click(object sender, EventArgs e)
         {
             if (uxOpenFile.ShowDialog() == DialogResult.OK)
             {
@@ -32,8 +34,16 @@ namespace DataExtractor
                     return;
                 }
 
-                DatabaseHandler database = new DatabaseHandler(uxOpenFile.FileName);
-                database.CsvToSql(csv);
+                if (database != null)
+                {
+                    database.Close();
+                    uxHeaderSelect.Items.Clear();
+                    uxDataSelect.Items.Clear();
+                }
+
+                database = new DatabaseHandler(uxOpenFile.FileName);
+                await Task.Run(() => database.CsvToSql(csv));
+
                 UpdateHeaderComboBox(database);
             }
         }
@@ -49,8 +59,24 @@ namespace DataExtractor
             uxHeaderSelect.SelectedIndex = 0;
         }
 
+        private void UpdateDataComboBox(string header, DatabaseHandler database)
+        {
+            List<string> data = database.RetrieveDataFromHeader(header);
+            foreach (string s in data)
+            {
+                uxDataSelect.Items.Add(s);
+            }
+            uxDataSelect.SelectedIndex = 0;
+        }
+
         private void UserInterface_Load(object sender, EventArgs e)
         {
+        }
+
+        private void uxHeaderSelect_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            uxDataSelect.Items.Clear();
+            UpdateDataComboBox(uxHeaderSelect.SelectedItem.ToString(), database);
         }
     }
 }

@@ -87,6 +87,7 @@
             this.uxHeaderSelect.Name = "uxHeaderSelect";
             this.uxHeaderSelect.Size = new System.Drawing.Size(295, 21);
             this.uxHeaderSelect.TabIndex = 4;
+            this.uxHeaderSelect.SelectedIndexChanged += new System.EventHandler(this.uxHeaderSelect_SelectedIndexChanged);
             // 
             // label1
             // 

@@ -24,7 +24,7 @@ namespace DataExtractor
             InsertData(csv);
         }
 
-        public void CsvToSql(List<string> CsvData)
+        public async Task CsvToSql(List<string> CsvData)
         {
             CSVFile csv = new CSVFile(CsvData);
             CreateTable(csv);
@@ -81,6 +81,28 @@ namespace DataExtractor
             }
 
             return headers;
+        }
+
+        public List<string> RetrieveDataFromHeader(string header)
+        {
+            SQLiteCommand sqlCommand = new SQLiteCommand("select " + header + " from cache", dbConnection);
+            SQLiteDataReader reader = sqlCommand.ExecuteReader();
+
+            List<string> data = new List<string>();
+
+            while (reader.Read())
+            {
+                string result = reader.GetString(0);
+                if (!data.Contains(result))
+                    data.Add(reader.GetString(0));
+            }
+
+            return data;
+        }
+
+        public void Close()
+        {
+            dbConnection.Close();
         }
     }
 }

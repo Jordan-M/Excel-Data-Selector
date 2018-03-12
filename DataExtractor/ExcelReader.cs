@@ -8,6 +8,7 @@ using System.Data;
 using Microsoft.Office.Interop.Excel;
 using System.IO;
 using System.Runtime.InteropServices;
+using DataAccess;
 
 namespace DataExtractor
 {
@@ -20,6 +21,8 @@ namespace DataExtractor
         /// <returns>A list of csv style strings</returns>
         public static List<String> Read(string filePath) 
         {
+            return CreateCSVFromExcel(filePath); 
+
             Application excel = new Application();
             Workbook workBook;
 
@@ -58,7 +61,7 @@ namespace DataExtractor
                         }
                         else if (DateTime.TryParse(cellObject.Value.ToString(), out time))
                         {
-                            content = CleanString(cellObject.Value.ToShortDateString());
+                            content = CleanString(time.ToShortDateString());
                         }
                         else
                         {
@@ -71,6 +74,7 @@ namespace DataExtractor
                 line.Length--; // Remove the last comma
                 valueList.Add(line.ToString());
                 line.Clear();
+                Console.WriteLine(i);
             }
 
             CleanResources(excel, workBook, sheet, range);
@@ -131,6 +135,53 @@ namespace DataExtractor
             cleanString.Append('"'); // All of our string should end with a "
 
             return cleanString.ToString();
+        }
+
+        private static List<string> CreateCSVFromExcel(string fileLocation)
+        {
+            Application excel = new Application();
+            Workbook workBook = excel.Workbooks.Open(fileLocation);
+            Worksheet sheet = workBook.Sheets[1];
+            Range range = sheet.UsedRange;
+
+            workBook.SaveAs(fileLocation + ".csv", XlFileFormat.xlCSV);
+
+            workBook.Close(true);
+            excel.Quit();
+
+            var csv = DataAccess.DataTable.New.Read(fileLocation + ".csv");
+            List<string> values = new List<string>();
+            StringBuilder sb = new StringBuilder();
+
+            foreach (string column in csv.ColumnNames)
+            {
+                sb.Append(CleanString(column));
+                sb.Append(',');
+            }
+            sb.Length--;
+            values.Add(sb.ToString());
+            sb.Clear();
+
+            for (int i = 0; i < csv.NumRows; i++)
+            {
+                foreach (string s in csv.GetRow(i).Values)
+                {
+                    if (s == null)
+                    {
+                        sb.Append(CleanString(""));
+                    }
+                    else
+                    {
+                        sb.Append(CleanString(s));
+                    }
+                    sb.Append(',');
+                }
+                sb.Length--;
+                values.Add(sb.ToString());
+                sb.Clear();
+            }
+
+            return values;
         }
     }
 }
