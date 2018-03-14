@@ -60,10 +60,10 @@ namespace DataExtractor
 
         private void UpdateDataComboBox(string header)
         {
-            string[] data = csvHandler.RetrieveDataFromHeader(header);
-            foreach (string s in data)
+            List<string> data = csvHandler.RetrieveDataFromHeader(header);
+            foreach (string item in data.OrderBy(s => s))
             {
-                uxDataSelect.Items.Add(s);
+                uxDataSelect.Items.Add(item);
             }
             uxDataSelect.SelectedIndex = 0;
 

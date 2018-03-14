@@ -28,10 +28,10 @@ namespace DataExtractor
             return headers;
         }
 
-        public string[] RetrieveDataFromHeader(string header)
+        public List<string> RetrieveDataFromHeader(string header)
         {
             string[] columnData = csv.GetColumn(header).Values;
-            return columnData.Distinct().ToArray();
+            return columnData.Distinct().ToList();
         }
     }
 }

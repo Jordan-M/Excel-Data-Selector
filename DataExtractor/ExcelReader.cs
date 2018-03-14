@@ -52,7 +52,10 @@ namespace DataExtractor
 
             CleanResources(excel, workBook, sheet, range);
 
-            return DataAccess.DataTable.New.ReadCsv(csvFileLocation);
+            MutableDataTable csv = DataAccess.DataTable.New.ReadCsv(csvFileLocation);
+            new FileInfo(csvFileLocation).Delete();
+
+            return csv;
         }
     }
 }
