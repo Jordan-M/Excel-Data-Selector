@@ -8,12 +8,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DataAccess;
 
 namespace DataExtractor
 {
     public partial class UserInterface : Form
     {
-        DatabaseHandler database = null;
+        LINQDatabaseHandler csvHandler = null;
+
         public UserInterface()
         {
             InitializeComponent();
@@ -23,7 +25,8 @@ namespace DataExtractor
         {
             if (uxOpenFile.ShowDialog() == DialogResult.OK)
             {
-                List<string> csv;
+                MutableDataTable csv;
+
                 try
                 {
                     csv = ExcelReader.Read(uxOpenFile.FileName);
@@ -34,23 +37,18 @@ namespace DataExtractor
                     return;
                 }
 
-                if (database != null)
-                {
-                    database.Close();
-                    uxHeaderSelect.Items.Clear();
-                    uxDataSelect.Items.Clear();
-                }
+                uxHeaderSelect.Items.Clear();
+                uxDataSelect.Items.Clear();
 
-                database = new DatabaseHandler(uxOpenFile.FileName);
-                await Task.Run(() => database.CsvToSql(csv));
+                csvHandler = new LINQDatabaseHandler(csv);
 
-                UpdateHeaderComboBox(database);
+                UpdateHeaderComboBox();
             }
         }
 
-        private void UpdateHeaderComboBox(DatabaseHandler database)
+        private void UpdateHeaderComboBox()
         {
-            string[] headers = database.RetrieveHeaders();
+            string[] headers = csvHandler.RetrieveHeaders();
             foreach (string header in headers)
             {
                 uxHeaderSelect.Items.Add(header);
@@ -59,9 +57,9 @@ namespace DataExtractor
             uxHeaderSelect.SelectedIndex = 0;
         }
 
-        private void UpdateDataComboBox(string header, DatabaseHandler database)
+        private void UpdateDataComboBox(string header)
         {
-            List<string> data = database.RetrieveDataFromHeader(header);
+            string[] data = csvHandler.RetrieveDataFromHeader(header);
             foreach (string s in data)
             {
                 uxDataSelect.Items.Add(s);
@@ -76,7 +74,7 @@ namespace DataExtractor
         private void uxHeaderSelect_SelectedIndexChanged(object sender, EventArgs e)
         {
             uxDataSelect.Items.Clear();
-            UpdateDataComboBox(uxHeaderSelect.SelectedItem.ToString(), database);
+            UpdateDataComboBox(uxHeaderSelect.SelectedItem.ToString());
         }
     }
 }

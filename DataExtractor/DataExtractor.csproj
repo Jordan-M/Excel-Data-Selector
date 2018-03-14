@@ -74,6 +74,7 @@
     <Compile Include="CSVFile.cs" />
     <Compile Include="DatabaseHandler.cs" />
     <Compile Include="ExcelReader.cs" />
+    <Compile Include="LINQDatabaseHandler.cs" />
     <Compile Include="UserInterface.cs">
       <SubType>Form</SubType>
     </Compile>

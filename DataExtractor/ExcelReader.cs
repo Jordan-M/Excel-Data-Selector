@@ -15,74 +15,6 @@ namespace DataExtractor
     static class ExcelReader
     {
         /// <summary>
-        /// Reads in an excel file and creates a List of strings in CSV format for each row
-        /// </summary>
-        /// <param name="filePath">Path to an excel file</param>
-        /// <returns>A list of csv style strings</returns>
-        public static List<String> Read(string filePath) 
-        {
-            return CreateCSVFromExcel(filePath); 
-
-            Application excel = new Application();
-            Workbook workBook;
-
-            try
-            {
-                workBook = excel.Workbooks.Open(filePath);
-            }
-            catch (COMException ex)
-            {
-                throw new InvalidOperationException(ex.Message);
-            }
-
-            Worksheet sheet = workBook.Sheets[1];
-            Range range = sheet.UsedRange;
-
-            int rows = range.Rows.Count;
-            int cols = range.Columns.Count;
-
-            List<string> valueList = new List<string>();
-            StringBuilder line = new StringBuilder();
-
-            for (int i = 1; i <= rows; i++)
-            {
-                for (int j = 1; j <= cols; j++)
-                {
-                    var cellObject = range.Cells[i, j];
-                    var cellValue = range.Cells[i, j].Value2;
-
-                    if (cellObject != null)
-                    {
-                        DateTime time;
-                        string content;
-                        if (cellValue == null)
-                        {
-                            content = CleanString("");
-                        }
-                        else if (DateTime.TryParse(cellObject.Value.ToString(), out time))
-                        {
-                            content = CleanString(time.ToShortDateString());
-                        }
-                        else
-                        {
-                            content = CleanString(cellValue.ToString());
-                        }
-                        line.Append(content);
-                        line.Append(',');
-                    }
-                }
-                line.Length--; // Remove the last comma
-                valueList.Add(line.ToString());
-                line.Clear();
-                Console.WriteLine(i);
-            }
-
-            CleanResources(excel, workBook, sheet, range);
-
-            return valueList;
-        }
-
-        /// <summary>
         /// Cleans up the enviornment and frees all resources
         /// </summary>
         /// <param name="excel">Application to release</param>
@@ -100,7 +32,7 @@ namespace DataExtractor
             Marshal.ReleaseComObject(sheet);
 
             //close and release
-            workBook.Close();
+            workBook.Close(true);
             Marshal.ReleaseComObject(workBook);
 
             //quit and release
@@ -108,36 +40,7 @@ namespace DataExtractor
             Marshal.ReleaseComObject(excel);
         }
 
-        /// <summary>
-        /// Cleans a string to make it CSV friendly.
-        /// Things that make a string csv friendly are:
-        ///     1.) Surrounded by quotes. This forces all commas in the string to be escaped
-        ///     2.) Any quoutes inside the string should be followed by another quote to escape it
-        /// </summary>
-        /// <param name="dirtyString">A string to make csv friendly</param>
-        /// <returns>The clean string</returns>
-        private static string CleanString(string dirtyString)
-        {
-            StringBuilder cleanString = new StringBuilder();
-
-            cleanString.Append('"'); // All of our string should start with a "
-
-            foreach (char c in dirtyString)
-            {
-                cleanString.Append(c);
-                if (c == '"')
-                {
-                    cleanString.Append(c);
-                }
-
-            }
-
-            cleanString.Append('"'); // All of our string should end with a "
-
-            return cleanString.ToString();
-        }
-
-        private static List<string> CreateCSVFromExcel(string fileLocation)
+        public static MutableDataTable Read(string fileLocation)
         {
             Application excel = new Application();
             Workbook workBook = excel.Workbooks.Open(fileLocation);
@@ -146,42 +49,10 @@ namespace DataExtractor
 
             workBook.SaveAs(fileLocation + ".csv", XlFileFormat.xlCSV);
 
-            workBook.Close(true);
-            excel.Quit();
+            CleanResources(excel, workBook, sheet, range);
 
-            var csv = DataAccess.DataTable.New.Read(fileLocation + ".csv");
-            List<string> values = new List<string>();
-            StringBuilder sb = new StringBuilder();
-
-            foreach (string column in csv.ColumnNames)
-            {
-                sb.Append(CleanString(column));
-                sb.Append(',');
-            }
-            sb.Length--;
-            values.Add(sb.ToString());
-            sb.Clear();
-
-            for (int i = 0; i < csv.NumRows; i++)
-            {
-                foreach (string s in csv.GetRow(i).Values)
-                {
-                    if (s == null)
-                    {
-                        sb.Append(CleanString(""));
-                    }
-                    else
-                    {
-                        sb.Append(CleanString(s));
-                    }
-                    sb.Append(',');
-                }
-                sb.Length--;
-                values.Add(sb.ToString());
-                sb.Clear();
-            }
-
-            return values;
+            return DataAccess.DataTable.New.Read(fileLocation + ".csv");
+           
         }
     }
 }
