@@ -47,12 +47,12 @@ namespace DataExtractor
             Worksheet sheet = workBook.Sheets[1];
             Range range = sheet.UsedRange;
 
-            workBook.SaveAs(fileLocation + ".csv", XlFileFormat.xlCSV);
+            string csvFileLocation = fileLocation + ".csv";
+            workBook.SaveAs(csvFileLocation, XlFileFormat.xlCSV);
 
             CleanResources(excel, workBook, sheet, range);
 
-            return DataAccess.DataTable.New.Read(fileLocation + ".csv");
-           
+            return DataAccess.DataTable.New.ReadCsv(csvFileLocation);
         }
     }
 }

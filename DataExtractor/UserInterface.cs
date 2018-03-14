@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DataAccess;
+using System.IO;
 
 namespace DataExtractor
 {
@@ -21,7 +22,7 @@ namespace DataExtractor
             InitializeComponent();
         }
 
-        private async void uxFileSelectButton_Click(object sender, EventArgs e)
+        private void uxFileSelectButton_Click(object sender, EventArgs e)
         {
             if (uxOpenFile.ShowDialog() == DialogResult.OK)
             {
@@ -65,6 +66,15 @@ namespace DataExtractor
                 uxDataSelect.Items.Add(s);
             }
             uxDataSelect.SelectedIndex = 0;
+
+            using (StreamWriter sr = new StreamWriter("C:\\Users\\Jordan\\Desktop\\LOG.txt"))
+            {
+                foreach (string item in uxDataSelect.Items)
+                {
+                    sr.WriteLine(item);
+                }
+            }
+
         }
 
         private void UserInterface_Load(object sender, EventArgs e)
