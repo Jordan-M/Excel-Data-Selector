@@ -132,7 +132,7 @@
             this.Controls.Add(this.uxFileDisplay);
             this.Controls.Add(this.uxFileSelectLabel);
             this.Name = "UserInterface";
-            this.Text = "Form1";
+            this.Text = "Excel Data Selector";
             this.Load += new System.EventHandler(this.UserInterface_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
