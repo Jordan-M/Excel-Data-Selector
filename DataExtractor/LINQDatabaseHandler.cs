@@ -35,18 +35,21 @@ namespace DataExtractor
             return columnData.Distinct().ToList();
         }
 
-        public void SelectData(string column, string data)
+        public MemoryStream SelectData(string column, string data)
         {
             IEnumerable<Row> selection = csv.Rows.Where(i => i.Values[csv.GetColumnIndex(column)] == data);
 
-            using (StreamWriter csvStream = new StreamWriter("C:\\Users\\Jordan\\Desktop\\test.csv"))
-            {
-                foreach (Row r in selection)
-                {
-                    CsvWriter.RawWriteLine(r.Values, csvStream);
-                }
-            }
+            MemoryStream csvStream = new MemoryStream();
 
+            StreamWriter sw = new StreamWriter(csvStream);
+            
+            foreach (Row r in selection)
+            {
+                CsvWriter.RawWriteLine(r.Values, sw);
+            }
+            
+
+            return csvStream;
         }
     }
 }

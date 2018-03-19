@@ -38,6 +38,7 @@ namespace DataExtractor
                     return;
                 }
 
+                uxFileDisplay.Text = uxOpenFile.FileName;
                 uxHeaderSelect.Items.Clear();
                 uxDataSelect.Items.Clear();
 
@@ -80,7 +81,15 @@ namespace DataExtractor
 
         private void uxGenerateExcel_Click(object sender, EventArgs e)
         {
-            csvHandler.SelectData(uxHeaderSelect.SelectedItem.ToString(), uxDataSelect.SelectedItem.ToString());
+            string column = uxHeaderSelect.SelectedItem.ToString();
+            string data = uxDataSelect.SelectedItem.ToString();
+            string filePath = String.Format("{0} - {1}.csv", uxFileDisplay.Text, data);
+
+            using (MemoryStream csv = csvHandler.SelectData(column, data))
+            using (FileStream fs = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Write))
+            {
+                csv.WriteTo(fs);
+            }
         }
     }
 }
