@@ -66,15 +66,6 @@ namespace DataExtractor
                 uxDataSelect.Items.Add(item);
             }
             uxDataSelect.SelectedIndex = 0;
-
-            using (StreamWriter sr = new StreamWriter("C:\\Users\\Jordan\\Desktop\\LOG.txt"))
-            {
-                foreach (string item in uxDataSelect.Items)
-                {
-                    sr.WriteLine(item);
-                }
-            }
-
         }
 
         private void UserInterface_Load(object sender, EventArgs e)
@@ -85,6 +76,11 @@ namespace DataExtractor
         {
             uxDataSelect.Items.Clear();
             UpdateDataComboBox(uxHeaderSelect.SelectedItem.ToString());
+        }
+
+        private void uxGenerateExcel_Click(object sender, EventArgs e)
+        {
+            csvHandler.SelectData(uxHeaderSelect.SelectedItem.ToString(), uxDataSelect.SelectedItem.ToString());
         }
     }
 }

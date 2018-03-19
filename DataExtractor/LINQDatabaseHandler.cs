@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataAccess;
+using System.IO;
 
 namespace DataExtractor
 {
@@ -32,6 +33,19 @@ namespace DataExtractor
         {
             string[] columnData = csv.GetColumn(header).Values;
             return columnData.Distinct().ToList();
+        }
+
+        public void SelectData(string column, string data)
+        {
+            IEnumerable<Row> selection = csv.Rows.Where(i => i.Values[csv.GetColumnIndex(column)] == data);
+
+            var compactCSV = DataAccess.DataTable.New.ReadFromString("");
+            
+            foreach (Row r in selection)
+            {
+                compactCSV.
+            }
+
         }
     }
 }

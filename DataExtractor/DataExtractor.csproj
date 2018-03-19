@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExcelReader.cs" />
+    <Compile Include="ExcelWriter.cs" />
     <Compile Include="LINQDatabaseHandler.cs" />
     <Compile Include="UserInterface.cs">
       <SubType>Form</SubType>
@@ -109,7 +110,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\Desktop\DataTable-master\Sources\DataAccess\DataTable.csproj">
+    <ProjectReference Include="..\DataTableFork\DataTable\Sources\DataAccess\DataTable.csproj">
       <Project>{4798f7bd-7613-42c2-b35b-a208e65e51b8}</Project>
       <Name>DataTable</Name>
     </ProjectReference>

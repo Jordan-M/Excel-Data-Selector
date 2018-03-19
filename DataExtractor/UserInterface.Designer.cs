@@ -36,6 +36,7 @@
             this.uxHeaderSelect = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.uxDataSelect = new System.Windows.Forms.ComboBox();
+            this.uxGenerateExcel = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // uxFileSelectLabel
@@ -107,11 +108,22 @@
             this.uxDataSelect.Size = new System.Drawing.Size(295, 21);
             this.uxDataSelect.TabIndex = 6;
             // 
+            // uxGenerateExcel
+            // 
+            this.uxGenerateExcel.Location = new System.Drawing.Point(170, 92);
+            this.uxGenerateExcel.Name = "uxGenerateExcel";
+            this.uxGenerateExcel.Size = new System.Drawing.Size(75, 23);
+            this.uxGenerateExcel.TabIndex = 7;
+            this.uxGenerateExcel.Text = "Generate";
+            this.uxGenerateExcel.UseVisualStyleBackColor = true;
+            this.uxGenerateExcel.Click += new System.EventHandler(this.uxGenerateExcel_Click);
+            // 
             // UserInterface
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(389, 91);
+            this.ClientSize = new System.Drawing.Size(389, 127);
+            this.Controls.Add(this.uxGenerateExcel);
             this.Controls.Add(this.uxDataSelect);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.uxHeaderSelect);
@@ -137,6 +149,7 @@
         private System.Windows.Forms.ComboBox uxHeaderSelect;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox uxDataSelect;
+        private System.Windows.Forms.Button uxGenerateExcel;
     }
 }
 

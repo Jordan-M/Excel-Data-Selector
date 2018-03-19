@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.26430.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataExtractor", "DataExtractor\DataExtractor.csproj", "{883FE08A-4724-4B1D-8157-F0DD855890A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataTable", "..\..\..\..\..\Desktop\DataTable-master\Sources\DataAccess\DataTable.csproj", "{4798F7BD-7613-42C2-B35B-A208E65E51B8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataTable", "DataTableFork\DataTable\Sources\DataAccess\DataTable.csproj", "{4798F7BD-7613-42C2-B35B-A208E65E51B8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
