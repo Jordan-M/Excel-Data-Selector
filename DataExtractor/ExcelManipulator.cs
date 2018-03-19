@@ -8,11 +8,11 @@ using System.IO;
 
 namespace DataExtractor
 {
-    class LINQDatabaseHandler
+    class ExcelManipulator
     {
         MutableDataTable csv;
 
-        public LINQDatabaseHandler(MutableDataTable csv)
+        public ExcelManipulator(MutableDataTable csv)
         {
             this.csv = csv;
         }

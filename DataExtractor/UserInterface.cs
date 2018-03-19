@@ -15,7 +15,7 @@ namespace DataExtractor
 {
     public partial class UserInterface : Form
     {
-        LINQDatabaseHandler csvHandler = null;
+        ExcelManipulator csvHandler = null;
 
         public UserInterface()
         {
@@ -42,7 +42,7 @@ namespace DataExtractor
                 uxHeaderSelect.Items.Clear();
                 uxDataSelect.Items.Clear();
 
-                csvHandler = new LINQDatabaseHandler(csv);
+                csvHandler = new ExcelManipulator(csv);
 
                 UpdateHeaderComboBox();
             }
@@ -83,7 +83,7 @@ namespace DataExtractor
         {
             string column = uxHeaderSelect.SelectedItem.ToString();
             string data = uxDataSelect.SelectedItem.ToString();
-            string filePath = String.Format("{0} - {1}.csv", uxFileDisplay.Text, data);
+            string filePath = String.Format("{0} - {1} - {2}.csv", uxFileDisplay.Text, column, data);
 
             using (MemoryStream csv = csvHandler.SelectData(column, data))
             using (FileStream fs = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Write))
