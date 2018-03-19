@@ -39,11 +39,12 @@ namespace DataExtractor
         {
             IEnumerable<Row> selection = csv.Rows.Where(i => i.Values[csv.GetColumnIndex(column)] == data);
 
-            var compactCSV = DataAccess.DataTable.New.ReadFromString("");
-            
-            foreach (Row r in selection)
+            using (StreamWriter csvStream = new StreamWriter("C:\\Users\\Jordan\\Desktop\\test.csv"))
             {
-                compactCSV.
+                foreach (Row r in selection)
+                {
+                    CsvWriter.RawWriteLine(r.Values, csvStream);
+                }
             }
 
         }
